@@ -44,7 +44,6 @@ Released under the [GPL v3 license](http://opensource.org/licenses/GPL-3.0).
 ## Credits
 
 This plugin is based upon code from Simon Ugorji ( https://octagon.hashnode.dev/create-a-simple-image-captcha-using-php )
-I just made it work as a mantisbt plugin.
 
 ## Support
 
