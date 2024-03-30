@@ -31,7 +31,7 @@ event_signal( 'EVENT_LOGIN_HANDLE', gpc_get_string( 'captcha' ) ); <br>
 just before:<br>
 if( auth_attempt_login( $f_username, $f_password, $f_perm_login ) ) {<br>
 
-Edit login_passwordc_page .php and add the following line:<br>
+Edit login_password_page .php and add the following line:<br>
 event_signal( 'EVENT_LOGIN_SHOW' ); ?>; <br>
 just before:<br>
 if( $t_session_validation ) { ?><br>
