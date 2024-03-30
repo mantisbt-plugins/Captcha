@@ -32,9 +32,9 @@ just before:<br>
 if( auth_attempt_login( $f_username, $f_password, $f_perm_login ) ) {<br>
 
 Edit login_passwordc_page .php and add the following line:<br>
-<?php 	event_signal( 'EVENT_LOGIN_SHOW' ); ?>; <br>
+'<?php 	event_signal( 'EVENT_LOGIN_SHOW' ); ?>; <br>
 just before:<br>
-<?php if( $t_session_validation ) { ?><br>
+'<?php if( $t_session_validation ) { ?><br>
 
 
 ## License
