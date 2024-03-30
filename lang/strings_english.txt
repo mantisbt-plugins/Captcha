@@ -1,0 +1,4 @@
+<?PHP
+$s_plugin_Captcha_title = "Captcha Plugin";
+$s_plugin_Captcha_desc  = " Enable using Captcha @login";
+$s_login_error = 'Your account may be disabled or blocked or the username/password/captcha you entered is incorrect.';
