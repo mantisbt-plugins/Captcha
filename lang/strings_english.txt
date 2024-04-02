@@ -1,4 +1,7 @@
 <?PHP
 $s_plugin_Captcha_title = "Captcha Plugin";
 $s_plugin_Captcha_desc  = " Enable using Captcha @login";
+$s_plugin_Captcha_refresh = 'Refresh your Captcha, it is no longer valid.';
+$s_plugin_Captcha_lifetime = 'Lifetime of the Captcha string (seconds).';
+$s_plugin_Captcha_length = 'Length of the Captcha string.';
 $s_login_error = 'Your account may be disabled or blocked or the username/password/captcha you entered is incorrect.';

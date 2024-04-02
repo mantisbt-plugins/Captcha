@@ -25,7 +25,6 @@ function generateRandomString($length = 10) {
 
 $captcha_txt = generateRandomString(5);
 
-
 $image = imagecreate(200, 20);
 
 /**
