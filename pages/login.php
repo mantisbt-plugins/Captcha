@@ -63,7 +63,7 @@ if(isset($_POST)&& isset($_POST['submit'])){
 	?>
 	<div class="captcha">
 		<img id="captcha_img" src="<?php echo $srclink ?>" > <button title="Click to refresh image" id="btn_captcha_refresh" type="button">&#8635;</button><label id="captcha_form_label">Enter Text</label>
-        <input id="captcha_inp" name="captcha"> 
+        <input id="captcha_inp" name="captcha" class="autofocus"> 
 		<input type="hidden" id="username" name="username" value="<?php echo $f_username ?>" />		
 		<div id="cntdwn"></div> 
     </div>
