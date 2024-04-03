@@ -1,6 +1,6 @@
 # Captcha plugin for Mantisbt
 
-Version 2.1.0
+Version 1.1.1
 Copyright 2024 Cas Nuy
 
 ## description
