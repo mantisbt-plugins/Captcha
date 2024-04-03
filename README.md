@@ -43,5 +43,5 @@ Please visit https://github.com/mantisbt-plugins/Captcha
 ## Changes
 
 Version 1.0.0	30-03-2024	Initial release<br>
-Version 1.1.0	02-04-2024	Making use iof the default available event (no changes required anymore to core-files)
+Version 1.1.0	02-04-2024	Making use iof the default available event (no changes required anymore to core-files)<br>
 Version 1.1.1 03-04-2024  Added focus on input field for entering captcha
