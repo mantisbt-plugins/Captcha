@@ -11,7 +11,7 @@ class CaptchaPlugin extends MantisPlugin  {
 	function register() {
 		$this->name = plugin_lang_get( 'title' );
 		$this->description = plugin_lang_get( 'desc' );
-		$this->version = '1.1.0';
+		$this->version = '1.1.1';
 		$this->requires = array('MantisCore' => '2.3.0-dev',);
 		$this->page      = 'config';
 		$this->author = 'Cas Nuy';
