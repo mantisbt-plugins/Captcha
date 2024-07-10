@@ -4,6 +4,9 @@
  * Captcha plugin
  */
 class CaptchaPlugin extends MantisPlugin  {
+	/* Erroconstant */
+		const ERROR_BOTH_NOT_ACTIVE = "error_both_not_active";
+
 	/**
 	 * A method that populates the plugin information and minimum requirements.
 	 * @return void
@@ -11,7 +14,7 @@ class CaptchaPlugin extends MantisPlugin  {
 	function register() {
 		$this->name = plugin_lang_get( 'title' );
 		$this->description = plugin_lang_get( 'desc' );
-		$this->version = '1.1.1';
+		$this->version = '1.2.0';
 		$this->requires = array('MantisCore' => '2.3.0-dev',);
 		$this->page      = 'config';
 		$this->author = 'Cas Nuy';
@@ -28,6 +31,8 @@ class CaptchaPlugin extends MantisPlugin  {
 		return array(
 			'lifetime'		=> 20,
 			'length'		=> 5,
+			'imagetext'		=> ON,
+			'antibotq'		=> ON,
 			);
 	}
 	
@@ -53,11 +58,9 @@ class CaptchaPlugin extends MantisPlugin  {
 		$t_flags = new AuthFlags();
 		# Passwords managed externally for all users
 		$t_flags->setCanUseStandardLogin( true );
-//		$t_flags->setPasswordManagedExternallyMessage( 'Passwords are no more, you cannot change them!' );
 		# No one can use standard auth mechanism
 		# Override Login page and Logout Redirect
 		$t_flags->setCredentialsPage( helper_url_combine( plugin_page( 'login', /* redirect */ true ), 'username=' . $t_username ) );
-//		$t_flags->setLogoutRedirectPage( plugin_page( 'logout', /* redirect */ true ) );
 		# No long term session for identity provider to be able to kick users out.
 		$t_flags->setPermSessionEnabled( false );
 		# Enable re-authentication and use more aggressive timeout.

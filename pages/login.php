@@ -6,14 +6,20 @@ require_once( 'core.php' );
 require_api( 'authentication_api.php' );
 require_api( 'user_api.php' );
 
-// require_once 'plugins/Captcha2/pages/captcha_verify.php'; 
 include "plugins/Captcha/files/captcha_script.js";
 
 $f_username = gpc_get( 'username' );
 $f_reauthenticate = gpc_get_bool( 'reauthenticate', false );
 $f_return = gpc_get_string( 'return', config_get( 'default_home_page' ) );
-
+$f_antibotq = plugin_config_get( 'antibotq' );
+$f_imagetext = plugin_config_get( 'imagetext' );
 $t_return = string_url( string_sanitize_url( $f_return ) );
+
+if ( $f_antibotq == ON ) {
+	$num1 = rand(0,10); // pick a random number from 0 to 10 inclusive
+	$num2 = rand(0,10); // same idea
+	$o = rand(0,2); // 0 = plus, 1 = minus, 2 = multiply
+}
 
 # Login page shouldn't be indexed by search engines
 html_robots_noindex();
@@ -22,18 +28,42 @@ layout_login_page_begin();
 
 # TODO: use custom authentication method here.
 if(isset($_POST)&& isset($_POST['submit'])){
-
-    //call the function by binding it to a variable
-    $verify_captcha = json_decode(verifyCaptcha($_POST['captcha']), true); 
-	$result = $verify_captcha['captcha_status'];
-	//$result = 200 ;
-		if ($result == 200) {
-			$t_redirect_url = 'login_captcha_page.php?username='.$f_username;
-			print_header_redirect( $t_redirect_url );
-		} else {
+	if ( $f_antibotq == ON ) {
+		if(!isset($_POST["userAnswer"])) {
 			$t_redirect_url = 'login_page.php?error=1&return=index.php';
 			print_header_redirect( $t_redirect_url );
 		}
+		$userAnswer = $_POST["userAnswer"]; // This is what the client entered
+		/* Compute the actual answer */
+		// Get the values in our form
+		$num1 = $_POST["num1"]; // First number
+		$num2 = $_POST["num2"]; // Second number
+		$o = $_POST["operand"]; // INTEGER value of our operand (0, 1, or 2; corresponding to +, -, or *, respectively)
+  
+		// Calculate the actual answer
+		$actual = -999; # Init variable
+		switch($o) {
+			case 0: $actual = $num1 + $num2; break; // 0 = Addition
+			case 1: $actual = $num1 - $num2; break; // 1 = Subtraction
+			case 2: $actual = $num1 * $num2; break; // 2 = Multiplication
+		}
+ 
+		/* Check against the user's input and cancel form submission if it's incorrect */
+		if($userAnswer != $actual) {
+			$t_redirect_url = 'login_page.php?error=1&return=index.php';
+			print_header_redirect( $t_redirect_url );
+		}
+	}
+    //call the function by binding it to a variable
+    $verify_captcha = json_decode(verifyCaptcha($_POST['captcha']), true); 
+	$result = $verify_captcha['captcha_status'];
+	if ($result == 200) {
+		$t_redirect_url = 'login_captcha_page.php?username='.$f_username;
+		print_header_redirect( $t_redirect_url );
+	} else {
+		$t_redirect_url = 'login_page.php?error=1&return=index.php';
+		print_header_redirect( $t_redirect_url );
+	}
 
 }
 ?>
@@ -60,13 +90,29 @@ if(isset($_POST)&& isset($_POST['submit'])){
 	$t_length = config_get( 'plugin_Captcha_length' );
 	$srclink = "plugins/Captcha/pages/captcha_image.php?length=";
 	$srclink .= $t_length;
-	?>
+	if ( $f_imagetext == ON ) {
+?>	
 	<div class="captcha">
 		<img id="captcha_img" src="<?php echo $srclink ?>" > <button title="Click to refresh image" id="btn_captcha_refresh" type="button">&#8635;</button><label id="captcha_form_label">Enter Text</label>
         <input id="captcha_inp" name="captcha" class="autofocus"> 
 		<input type="hidden" id="username" name="username" value="<?php echo $f_username ?>" />		
 		<div id="cntdwn"></div> 
     </div>
+<?php
+}
+
+if ( $f_antibotq == ON ) {
+?>	
+	<div class="antibotq">
+	<label for="math"><?php echo lang_get( 'plugin_Captcha_calculate').": ". $num1 . "&nbsp;" . operand($o) . "&nbsp;" . $num2 . "?"; ?></label>
+	<input type="text" id="math" name="userAnswer" size="3"></input>
+	<input type="hidden" name="num1" value="<?php echo $num1; ?>"></input>
+	<input type="hidden" name="operand" value="<?php echo $o; ?>"></input>
+	<input type="hidden" name="num2" value="<?php echo $num2; ?>"></input>
+    </div>
+<?php
+}
+?>
 </div>
 <div>
 <input type="submit" name="submit" class="width-40 pull-right btn btn-success btn-inverse bigger-110" value="<?php echo lang_get( 'login' ) ?>" />
@@ -129,4 +175,17 @@ function verifyCaptcha($input = "abc") {
                  );
                 return json_encode($return);
             }
+}
+
+
+
+ 
+/* This function will use the integer value of $operand to show either a plus, minus, or times. */
+function operand($o) {
+    switch($o) {
+         case 0: return "+"; break;
+         case 1: return "-"; break;
+         case 2: return "*"; break;
+         default: return "?"; break; //Remark: We shouldn't ever get down here.
+     }
 }

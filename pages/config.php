@@ -15,7 +15,7 @@ print_manage_menu();
 <div class="widget-header widget-header-small">
 	<h4 class="widget-title lighter">
 		<i class="ace-icon fa fa-text-width"></i>
-		<?php echo  lang_get( 'plugin_format_config' )?>
+		<?php echo  lang_get( 'config' )?>
 	</h4>
 </div>
 <div class="widget-body">
@@ -44,6 +44,34 @@ print_manage_menu();
 <input type="number" name="length" min="3" max="10"  value="<?php echo plugin_config_get( 'length' )?>" >
 </td>
 </tr> 
+
+
+<tr >
+<td class="category" width="60%">
+<?php echo lang_get( 'plugin_Captcha_imagetext' )?>
+</td>
+<td class="category" width="20%">
+<label><input type="radio" name='imagetext' value="1" <?php echo( ON == plugin_config_get( 'imagetext' ) ) ? 'checked="checked" ' : ''?>/>
+<?php echo lang_get( 'enabled' )?></label>
+
+<label><input type="radio" name='imagetext' value="0" <?php echo( OFF == plugin_config_get( 'imagetext' ) )? 'checked="checked" ' : ''?>/>
+<?php echo lang_get( 'disabled' )?></label>
+</td>
+</tr> 
+
+<tr >
+<td class="category" width="60%">
+<?php echo lang_get( 'plugin_Captcha_antibotq' )?>
+</td>
+<td class="category" width="20%">
+<label><input type="radio" name='antibotq' value="1" <?php echo( ON == plugin_config_get( 'antibotq' ) ) ? 'checked="checked" ' : ''?>/>
+<?php echo lang_get( 'enabled' )?></label>
+
+<label><input type="radio" name='antibotq' value="0" <?php echo( OFF == plugin_config_get( 'antibotq' ) )? 'checked="checked" ' : ''?>/>
+<?php echo lang_get( 'disabled' )?></label>
+</td>
+</tr> 
+
 
 </table>
 </div>
