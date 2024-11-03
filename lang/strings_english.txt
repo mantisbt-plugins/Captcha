@@ -9,3 +9,4 @@ $s_plugin_Captcha_calculate = 'Calculate this equasion';
 $s_plugin_Captcha_imagetext = 'Enable Captcha Image';
 $s_login_error = 'Your account may be disabled or blocked or the username/password/captcha you entered is incorrect or the Anti-Bot question was not answered correctly.';
 $s_plugin_Captcha_error_both_not_active = 'You cannot de-activate both captcha methods, at least one must be active.';
+$s_plugin_Captcha_config = 'Configuration';
